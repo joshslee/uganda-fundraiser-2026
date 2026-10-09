@@ -174,13 +174,13 @@ function GiveButton() {
             <span className="h-px flex-1 bg-foreground/40" />
           </div>
           <blockquote className="text-sm sm:text-[15px] italic leading-relaxed">
-            &ldquo;The point is this: whoever sows sparingly will also reap
-            sparingly, and whoever sows bountifully will also reap bountifully.
-            Each one must give as he has decided in his heart, not reluctantly
-            or under compulsion, for God loves a cheerful giver.&rdquo;
+            &ldquo;Go therefore and make disciples of all nations, baptizing
+            them in the name of the Father and of the Son and of the Holy
+            Spirit, teaching them to observe all that I have commanded you. And
+            behold, I am with you always, to the end of the age.&rdquo;
           </blockquote>
           <p className="mt-2 font-mono text-[11px] sm:text-xs">
-            2 Corinthians 9:6&ndash;7 (ESV)
+            Matthew 28:19&ndash;20 (ESV)
           </p>
           <button
             type="button"
