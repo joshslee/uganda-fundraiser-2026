@@ -2,7 +2,8 @@ export function Flower({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 332 300"
+      viewBox="-20 -24 372 348"
+      fill="none"
       aria-hidden="true"
       className={`h-auto ${className ?? ""}`}
     >
