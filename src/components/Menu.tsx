@@ -144,7 +144,15 @@ export function Menu() {
             </span>
           </div>
           <p className="font-mono text-[9px] tracking-widest opacity-80">
-            ANDREWS &nbsp;·&nbsp; 2026
+            <a
+              href="https://livingway.la/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline-offset-2 hover:underline"
+            >
+              LIVINGWAY
+            </a>
+            &nbsp;·&nbsp; 2026
           </p>
         </div>
       </footer>
