@@ -8,8 +8,8 @@ type View = "all" | "drinks" | "pastries";
 
 const views: { id: View; label: string }[] = [
   { id: "all", label: "All" },
-  { id: "drinks", label: "Drinks" },
   { id: "pastries", label: "Pastries" },
+  { id: "drinks", label: "Drinks" },
 ];
 
 function SectionHeader({ title, oatmilk }: { title: string; oatmilk?: boolean }) {
@@ -55,7 +55,7 @@ function ViewToggle({ view, onChange }: { view: View; onChange: (v: View) => voi
     <div
       role="tablist"
       aria-label="Menu sections"
-      className="mx-auto mt-6 inline-flex border-2 border-brown font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider"
+      className="mx-auto mt-6 grid w-full max-w-sm grid-cols-3 border-2 border-brown font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider"
     >
       {views.map((v) => {
         const active = v.id === view;
@@ -66,7 +66,7 @@ function ViewToggle({ view, onChange }: { view: View; onChange: (v: View) => voi
             type="button"
             aria-selected={active}
             onClick={() => onChange(v.id)}
-            className={`px-4 py-2 transition-colors sm:px-5 ${
+            className={`border-l-2 border-brown px-2 py-2 text-center transition-colors first:border-l-0 ${
               active ? "bg-brown text-white" : "bg-white text-brown hover:bg-brown/10"
             }`}
           >
