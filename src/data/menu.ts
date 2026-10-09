@@ -83,5 +83,6 @@ export const pastries: Pastry[] = [
   { name: "Jalapeño Cheddar Scones" },
 ];
 
-/** Destination for the Give button. Leave empty until a giving link exists. */
-export const giveUrl = "";
+/** Zelle payment link for Living Way Community Church (donate@lwccla.org). */
+export const giveUrl =
+  "https://enroll.zellepay.com/qr-codes/?data=eyJuYW1lIjoiTElWSU5HIFdBWSBDT01NVU5JVFkgQ0hVUkNIIE9GIExPUyIsInRva2VuIjoiZG9uYXRlQGx3Y2NsYS5vcmciLCJhY3Rpb24iOiJwYXltZW50In0=";

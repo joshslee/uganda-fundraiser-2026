@@ -132,3 +132,98 @@ body {
     animation: none;
   }
 }
+
+/* Buttons: soft lift on hover, firm press on active, visible focus. */
+.btn-lux {
+  transition:
+    transform 450ms var(--ease-lux),
+    box-shadow 450ms var(--ease-lux),
+    background-color 450ms var(--ease-lux),
+    color 450ms var(--ease-lux),
+    opacity 450ms var(--ease-lux);
+}
+.btn-lux:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px -14px var(--color-foreground);
+}
+.btn-lux:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: 0 4px 10px -8px var(--color-foreground);
+  transition-duration: 120ms;
+}
+.btn-lux:focus-visible {
+  outline: 2px solid var(--color-foreground);
+  outline-offset: 3px;
+}
+/* Tabs sit inside a bar, so they tint and press instead of lifting. */
+.tab-lux {
+  transition:
+    background-color 450ms var(--ease-lux),
+    color 450ms var(--ease-lux),
+    transform 450ms var(--ease-lux);
+}
+.tab-lux:active {
+  transform: scale(0.96);
+  transition-duration: 120ms;
+}
+/* Text links: underline draws in from the left. */
+.link-lux {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 450ms var(--ease-lux), opacity 450ms var(--ease-lux);
+}
+.link-lux:hover,
+.link-lux:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* Give modal: the card flips between the message and the QR. */
+.flip-scene {
+  perspective: 1400px;
+}
+.flip-card {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 800ms var(--ease-lux);
+}
+.flip-card[data-flipped="true"] {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  grid-area: 1 / 1;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Belt and braces: faces also swap opacity when the card is edge-on,
+     so the hidden face never shows in renderers that flatten 3D. */
+  transition: opacity 0ms linear 400ms;
+}
+.flip-face-back {
+  transform: rotateY(180deg);
+  opacity: 0;
+  pointer-events: none;
+}
+.flip-card[data-flipped="true"] .flip-face-back {
+  opacity: 1;
+  pointer-events: auto;
+}
+.flip-card[data-flipped="true"] .flip-face-front {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-lux,
+  .tab-lux,
+  .link-lux,
+  .flip-card,
+  .flip-face {
+    transition: none;
+  }
+  .btn-lux:hover,
+  .btn-lux:active {
+    transform: none;
+  }
+}

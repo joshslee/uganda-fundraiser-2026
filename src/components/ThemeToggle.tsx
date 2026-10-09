@@ -70,7 +70,7 @@ export function ThemeToggle() {
       aria-pressed={dark}
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
       title={dark ? "Light mode" : "Dark mode"}
-      className="inline-flex h-10 w-10 cursor-pointer items-center justify-center border-2 border-foreground text-foreground transition-colors duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:bg-foreground/10"
+      className="btn-lux inline-flex h-10 w-10 cursor-pointer items-center justify-center border-2 border-foreground text-foreground hover:bg-foreground/10"
     >
       <svg
         viewBox="0 0 24 24"
