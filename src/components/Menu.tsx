@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { drinkSections, giveUrl, pastries, type Drink } from "@/data/menu";
 import { Flower } from "./Flower";
 import { ThemeToggle } from "./ThemeToggle";
@@ -105,7 +105,9 @@ function ViewToggle({
             aria-selected={active}
             onClick={() => onChange(v.id)}
             className={`relative z-10 cursor-pointer border-l-2 border-foreground px-2 py-2 text-center transition-colors duration-300 first:border-l-0 ${
-              active ? "text-background" : "text-foreground hover:bg-foreground/10"
+              active
+                ? "text-background"
+                : "text-foreground hover:bg-foreground/10"
             }`}
           >
             {v.label}
@@ -117,18 +119,79 @@ function ViewToggle({
 }
 
 function GiveButton() {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const hasUrl = giveUrl.length > 0;
+  const buttonClass =
+    "inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none";
+
+  if (hasUrl) {
+    return (
+      <a
+        href={giveUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={buttonClass}
+      >
+        <Flower className="w-4" />
+        Give
+      </a>
+    );
+  }
+
   return (
-    <a
-      href={hasUrl ? giveUrl : "#"}
-      onClick={(e) => {
-        if (!hasUrl) e.preventDefault();
-      }}
-      className="inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none"
-    >
-      <Flower className="w-4" />
-      Give
-    </a>
+    <>
+      <button
+        type="button"
+        onClick={() => dialogRef.current?.showModal()}
+        className={buttonClass}
+      >
+        <Flower className="w-4" />
+        Give
+      </button>
+      <dialog
+        ref={dialogRef}
+        aria-labelledby="give-title"
+        onClick={(e) => {
+          if (e.target === e.currentTarget) e.currentTarget.close();
+        }}
+        className="give-dialog m-auto w-[calc(100%-2.5rem)] max-w-md border-2 border-foreground bg-background p-0 text-foreground backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+      >
+        <div className="flex flex-col items-center px-6 py-8 text-center sm:px-8">
+          <Flower className="w-12" />
+          <h2
+            id="give-title"
+            className="mt-4 font-display text-4xl tracking-wider leading-none"
+          >
+            Thank You
+          </h2>
+          <p className="mt-3 text-sm sm:text-[15px] leading-snug">
+            Thank you for your heart to give toward the Uganda Missions Fund.
+            Our giving link will be added soon, so please check back shortly.
+          </p>
+          <div className="my-6 flex w-full items-center gap-3">
+            <span className="h-px flex-1 bg-foreground/40" />
+            <Flower className="w-3 opacity-60" />
+            <span className="h-px flex-1 bg-foreground/40" />
+          </div>
+          <blockquote className="text-sm sm:text-[15px] italic leading-relaxed">
+            &ldquo;The point is this: whoever sows sparingly will also reap
+            sparingly, and whoever sows bountifully will also reap bountifully.
+            Each one must give as he has decided in his heart, not reluctantly
+            or under compulsion, for God loves a cheerful giver.&rdquo;
+          </blockquote>
+          <p className="mt-2 font-mono text-[11px] sm:text-xs">
+            2 Corinthians 9:6&ndash;7 (ESV)
+          </p>
+          <button
+            type="button"
+            onClick={() => dialogRef.current?.close()}
+            className="mt-7 inline-flex h-10 cursor-pointer items-center justify-center border-2 border-foreground px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-colors hover:bg-foreground hover:text-background"
+          >
+            Close
+          </button>
+        </div>
+      </dialog>
+    </>
   );
 }
 
@@ -171,62 +234,66 @@ export function Menu() {
         <ThemeToggle />
         <GiveButton />
       </div>
-      <div className="relative mx-auto w-full max-w-xl flex-1 px-5 pt-16 pb-40 sm:px-8 sm:pt-10">
-        <header className="flex flex-col items-center text-center">
-          <h1 className="font-display text-7xl sm:text-8xl leading-none tracking-wide">
-            Menu
-          </h1>
-          <div className="mx-auto mt-5 max-w-sm border-2 border-foreground px-4 py-3 text-[13px] sm:text-sm leading-snug">
-            <p>
-              Give what you can!{" "}
-              <strong className="font-bold">$5 suggested price.</strong>
-            </p>
-            <p>100% of proceeds go toward the Missions Fund.</p>
-          </div>
-          <ViewToggle view={view} onChange={setView} />
-        </header>
-
-        <div key={view} className="menu-fade-in">
-          {showPastries && (
-            <section>
-              <SectionHeader title="Pastries" />
-              <ul className="mx-auto grid max-w-md grid-cols-1 gap-x-6 gap-y-5 text-center sm:grid-cols-2">
-                {pastries.map((p, i) => (
-                  <li key={p.name} className={DESKTOP_ORDER[(p.desktopOrder ?? i + 1) - 1]}>
-                    <h2 className="font-display text-2xl sm:text-[1.75rem] tracking-wider leading-none">
-                      {p.name}
-                    </h2>
-                    {p.note && (
-                      <p className="mt-1 font-mono text-[11px] sm:text-xs">
-                        ({p.note})
-                      </p>
-                    )}
-                  </li>
-                ))}
-              </ul>
-              <p className="mx-auto mt-8 max-w-md text-center font-mono text-[11px] sm:text-xs">
-                Courtesy of the Uganda Mission Team and Sarah Shin
+      <div className="relative flex-1">
+        <Flower className="pointer-events-none absolute bottom-4 right-7 w-24 rotate-12 sm:right-[34px] sm:w-28" />
+        <div className="mx-auto w-full max-w-xl px-5 pt-16 pb-40 sm:px-8 sm:pt-10">
+          <header className="flex flex-col items-center text-center">
+            <h1 className="font-display text-7xl sm:text-8xl leading-none tracking-wide">
+              Menu
+            </h1>
+            <div className="mx-auto mt-5 max-w-sm border-2 border-foreground px-4 py-3 text-[13px] sm:text-sm leading-snug">
+              <p>
+                Give what you can!{" "}
+                <strong className="font-bold">$5 suggested price.</strong>
               </p>
-            </section>
-          )}
+              <p>100% of proceeds go toward the Missions Fund.</p>
+            </div>
+            <ViewToggle view={view} onChange={setView} />
+          </header>
 
-          {showDrinks &&
-            drinkSections.map((section) => (
-              <section key={section.title}>
-                <SectionHeader
-                  title={section.title}
-                  oatmilk={section.oatmilk}
-                />
-                <div className="space-y-10">
-                  {section.drinks.map((drink) => (
-                    <DrinkItem key={drink.name} drink={drink} />
+          <div key={view} className="menu-fade-in">
+            {showPastries && (
+              <section>
+                <SectionHeader title="Pastries" />
+                <ul className="mx-auto grid max-w-md grid-cols-1 gap-x-6 gap-y-5 text-center sm:grid-cols-2">
+                  {pastries.map((p, i) => (
+                    <li
+                      key={p.name}
+                      className={DESKTOP_ORDER[(p.desktopOrder ?? i + 1) - 1]}
+                    >
+                      <h2 className="font-display text-2xl sm:text-[1.75rem] tracking-wider leading-none">
+                        {p.name}
+                      </h2>
+                      {p.note && (
+                        <p className="mt-1 font-mono text-[11px] sm:text-xs">
+                          ({p.note})
+                        </p>
+                      )}
+                    </li>
                   ))}
-                </div>
+                </ul>
+                <p className="mx-auto mt-8 max-w-md text-center font-mono text-[11px] sm:text-xs">
+                  Courtesy of the Uganda Mission Team and Sarah Shin
+                </p>
               </section>
-            ))}
-        </div>
+            )}
 
-        <Flower className="pointer-events-none absolute bottom-4 right-4 w-24 rotate-12 sm:right-0 sm:w-28" />
+            {showDrinks &&
+              drinkSections.map((section) => (
+                <section key={section.title}>
+                  <SectionHeader
+                    title={section.title}
+                    oatmilk={section.oatmilk}
+                  />
+                  <div className="space-y-10">
+                    {section.drinks.map((drink) => (
+                      <DrinkItem key={drink.name} drink={drink} />
+                    ))}
+                  </div>
+                </section>
+              ))}
+          </div>
+        </div>
       </div>
 
       <footer className="relative border-t border-white/15 bg-brown text-white">

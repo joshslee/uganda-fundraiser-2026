@@ -72,3 +72,13 @@ body {
     animation: none;
   }
 }
+
+.give-dialog[open] {
+  animation: menu-fade-in 300ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .give-dialog[open] {
+    animation: none;
+  }
+}
