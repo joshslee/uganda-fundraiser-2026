@@ -52,8 +52,12 @@ function DrinkItem({ drink }: { drink: Drink }) {
       <h2 className="font-display text-3xl sm:text-4xl tracking-wider leading-none">
         {drink.name}
       </h2>
-      <p className="mt-1 font-mono text-[11px] sm:text-xs">
-        ({drink.subtitle})
+      <span
+        aria-hidden="true"
+        className="mx-auto mt-2.5 block h-px w-6 bg-foreground/50"
+      />
+      <p className="mt-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] opacity-75 sm:text-[11px]">
+        {drink.subtitle}
       </p>
       <p className="mt-3 text-sm sm:text-[15px] leading-snug sm:text-justify sm:[text-align-last:center]">
         {drink.description}
