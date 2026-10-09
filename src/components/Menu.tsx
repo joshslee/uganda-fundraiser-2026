@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { drinkSections, giveUrl, pastries, type Drink } from "@/data/menu";
 import { Flower } from "./Flower";
+import { ThemeToggle } from "./ThemeToggle";
 
 type View = "all" | "drinks" | "pastries";
 
@@ -22,11 +24,11 @@ function SectionHeader({
   return (
     <div className="relative mt-10 mb-8">
       <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-brown" />
+        <span className="h-px flex-1 bg-foreground" />
         <span className="font-mono text-[11px] sm:text-xs font-bold tracking-wide">
           {title}
         </span>
-        <span className="h-px flex-1 bg-brown" />
+        <span className="h-px flex-1 bg-foreground" />
       </div>
       {oatmilk && (
         <p className="absolute right-0 top-full mt-1 font-mono text-[9px] sm:text-[10px] font-bold">
@@ -70,11 +72,11 @@ function ViewToggle({
     <div
       role="tablist"
       aria-label="Menu sections"
-      className="relative mx-auto mt-6 grid w-full max-w-sm grid-cols-3 border-2 border-brown font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider"
+      className="relative mx-auto mt-6 grid w-full max-w-sm grid-cols-3 border-2 border-foreground font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider"
     >
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-brown transition-transform duration-300 ease-out motion-reduce:transition-none"
+        className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-foreground transition-transform duration-300 ease-out motion-reduce:transition-none"
         style={{ transform: `translateX(${index * 100}%)` }}
       />
       {views.map((v) => {
@@ -86,8 +88,8 @@ function ViewToggle({
             type="button"
             aria-selected={active}
             onClick={() => onChange(v.id)}
-            className={`relative z-10 border-l-2 border-brown px-2 py-2 text-center transition-colors duration-300 first:border-l-0 ${
-              active ? "text-white" : "text-brown hover:bg-brown/10"
+            className={`relative z-10 cursor-pointer border-l-2 border-foreground px-2 py-2 text-center transition-colors duration-300 first:border-l-0 ${
+              active ? "text-background" : "text-foreground hover:bg-foreground/10"
             }`}
           >
             {v.label}
@@ -106,7 +108,7 @@ function GiveButton() {
       onClick={(e) => {
         if (!hasUrl) e.preventDefault();
       }}
-      className="absolute right-5 top-5 z-20 inline-flex items-center gap-1.5 bg-brown px-4 py-2 font-display text-lg leading-none tracking-widest text-white transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none sm:right-8 sm:top-6"
+      className="inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none"
     >
       <Flower className="w-4" />
       Give
@@ -120,14 +122,17 @@ export function Menu() {
   const showPastries = view !== "drinks";
 
   return (
-    <main className="flex flex-1 flex-col bg-white text-brown">
-      <div className="relative mx-auto w-full max-w-xl flex-1 px-5 pt-16 pb-40 sm:px-8 sm:pt-10">
+    <main className="relative flex flex-1 flex-col bg-background text-foreground">
+      <div className="absolute right-5 top-5 z-20 flex items-center gap-2 sm:right-6 sm:top-6">
+        <ThemeToggle />
         <GiveButton />
+      </div>
+      <div className="relative mx-auto w-full max-w-xl flex-1 px-5 pt-16 pb-40 sm:px-8 sm:pt-10">
         <header className="flex flex-col items-center text-center">
           <h1 className="font-display text-7xl sm:text-8xl leading-none tracking-wide">
             Menu
           </h1>
-          <div className="mx-auto mt-5 max-w-sm border-2 border-brown px-4 py-3 text-[13px] sm:text-sm leading-snug">
+          <div className="mx-auto mt-5 max-w-sm border-2 border-foreground px-4 py-3 text-[13px] sm:text-sm leading-snug">
             <p>
               Give what you can!{" "}
               <strong className="font-bold">$5 suggested price.</strong>
@@ -180,25 +185,42 @@ export function Menu() {
         <Flower className="pointer-events-none absolute bottom-4 right-4 w-24 rotate-12 sm:right-0 sm:w-28" />
       </div>
 
-      <footer className="bg-brown py-4 text-white">
-        <div className="flex flex-col items-center gap-1">
-          <div className="flex items-center gap-2">
-            <Flower className="w-6" />
-            <span className="font-display text-xl tracking-widest leading-none">
-              Common Grounds
-            </span>
+      <footer className="relative border-t border-white/15 bg-brown text-white">
+        <div className="flex w-full flex-col items-center gap-3 px-5 py-4 sm:px-8">
+          <div className="flex flex-col items-center gap-1">
+            <div className="flex items-center gap-2">
+              <Flower className="w-6" />
+              <span className="font-display text-xl tracking-widest leading-none">
+                Common Grounds
+              </span>
+            </div>
+            <p className="font-mono text-[9px] tracking-widest opacity-80">
+              <a
+                href="https://livingway.la/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline-offset-2 hover:underline"
+              >
+                LIVINGWAY
+              </a>
+              &nbsp;·&nbsp; 2026
+            </p>
           </div>
-          <p className="font-mono text-[9px] tracking-widest opacity-80">
-            <a
-              href="https://livingway.la/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="underline-offset-2 hover:underline"
-            >
-              LIVINGWAY
-            </a>
-            &nbsp;·&nbsp; 2026
-          </p>
+          <a
+            href="https://livingway.la/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LivingWay"
+            className="self-start opacity-90 transition-opacity hover:opacity-100 sm:absolute sm:left-6 sm:top-1/2 sm:-translate-y-1/2"
+          >
+            <Image
+              src="/livingway.png"
+              alt="LivingWay"
+              width={498}
+              height={196}
+              className="h-10 w-auto sm:h-11"
+            />
+          </a>
         </div>
       </footer>
     </main>

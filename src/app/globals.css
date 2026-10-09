@@ -15,11 +15,19 @@
   --font-display: var(--font-bebas);
 }
 
+:root[data-theme="dark"] {
+  --background: #4a2a1e;
+  --foreground: #ffffff;
+}
+
 html,
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-dm-sans), Arial, Helvetica, sans-serif;
+  transition:
+    background-color 300ms ease,
+    color 300ms ease;
 }
 
 @keyframes menu-fade-in {
