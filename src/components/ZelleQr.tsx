@@ -4,14 +4,14 @@ import { FLOWER_PATH } from "./Flower";
 const { size: N, rows } = zelleQr;
 const Q = 4;
 const W = N + 2 * Q;
-const HALF = 5; // half-width of the centre knockout (11x11 modules)
+const HALF = 5; // sets the flower size
+const R = 6.2; // radius of the circular centre knockout, in modules
 const mid = Math.floor(N / 2);
 
 const dark = (x: number, y: number) => rows[y][x] === "1";
 const inFinder = (x: number, y: number) =>
   (x < 7 && y < 7) || (x >= N - 7 && y < 7) || (x < 7 && y >= N - 7);
-const inLogo = (x: number, y: number) =>
-  Math.abs(x - mid) <= HALF && Math.abs(y - mid) <= HALF;
+const inLogo = (x: number, y: number) => Math.hypot(x - mid, y - mid) <= R;
 
 // Merge horizontal runs of dark modules into single rounded bars.
 const runs: { x: number; y: number; w: number }[] = [];
@@ -55,7 +55,7 @@ export function ZelleQr({ className }: { className?: string }) {
       className={className}
       shapeRendering="geometricPrecision"
     >
-      <rect width={W} height={W} fill="#ffffff" rx="2" />
+      <rect width={W} height={W} fill="#ffffff" rx="3" />
       <g fill="#4a2a1e">
         {runs.map((r) => (
           <rect
@@ -81,6 +81,7 @@ export function ZelleQr({ className }: { className?: string }) {
             <rect x={Q + fx + 2} y={Q + fy + 2} width={3} height={3} rx={1} />
           </g>
         ))}
+        <circle cx={cx} cy={cy} r={R} fill="#ffffff" />
         <g transform={`translate(${cx - 166 * s} ${cy - 146 * s}) scale(${s})`}>
           <path fillRule="evenodd" d={FLOWER_PATH} />
         </g>

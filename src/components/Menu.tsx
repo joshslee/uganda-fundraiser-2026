@@ -235,7 +235,7 @@ function GiveButton() {
             <p className="mt-2 font-mono text-[11px] sm:text-xs">
               Zelle &middot; Living Way Community Church
             </p>
-            <ZelleQr className="mt-5 w-full max-w-[260px] border-2 border-foreground" />
+            <ZelleQr className="mt-5 w-full max-w-[260px]" />
             <p className="mt-4 font-mono text-[11px] sm:text-xs leading-snug">
               Add{" "}
               <strong className="font-bold">
