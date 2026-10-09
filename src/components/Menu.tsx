@@ -59,8 +59,11 @@ function DrinkItem({ drink }: { drink: Drink }) {
         {drink.description}
       </p>
       {drink.cloudtop && (
-        <p className="mt-2 text-sm sm:text-[15px]">
-          <span aria-hidden="true">✻ </span>[Cloudtop upon request]
+        <p className="mt-3">
+          <span className="inline-flex items-center gap-1.5 border border-foreground/40 px-2.5 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.16em] sm:text-[11px]">
+            <Flower className="w-3 opacity-80" />
+            Cloudtop upon request
+          </span>
         </p>
       )}
     </article>
