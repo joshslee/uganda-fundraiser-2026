@@ -95,7 +95,7 @@ function ViewToggle({
         className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-foreground transition-transform duration-300 ease-out motion-reduce:transition-none"
         style={{ transform: `translateX(${index * 100}%)` }}
       />
-      {views.map((v) => {
+      {views.map((v, i) => {
         const active = v.id === view;
         return (
           <button
@@ -104,7 +104,7 @@ function ViewToggle({
             type="button"
             aria-selected={active}
             onClick={() => onChange(v.id)}
-            className={`relative z-10 cursor-pointer border-l-2 border-foreground px-2 py-2 text-center transition-colors duration-300 first:border-l-0 ${
+            className={`relative z-10 cursor-pointer px-2 py-2 text-center transition-colors duration-300 ${i === 0 ? "" : "border-l-2 border-foreground"} ${
               active
                 ? "text-background"
                 : "text-foreground hover:bg-foreground/10"
@@ -251,7 +251,7 @@ export function Menu() {
             <ViewToggle view={view} onChange={setView} />
           </header>
 
-          <div key={view} className="menu-fade-in">
+          <div key={view} className="menu-fade-in min-h-[50vh]">
             {showPastries && (
               <section>
                 <SectionHeader title="Pastries" />

@@ -52,19 +52,30 @@ body {
   }
 }
 
+/* Section switch: opacity only, so nothing shifts while the content swaps. */
 @keyframes menu-fade-in {
   from {
     opacity: 0;
-    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 .menu-fade-in {
-  animation: menu-fade-in 400ms ease-out both;
+  animation: menu-fade-in 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Dialog keeps a gentle drop-in. */
+@keyframes dialog-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -74,7 +85,7 @@ body {
 }
 
 .give-dialog[open] {
-  animation: menu-fade-in 300ms ease-out both;
+  animation: dialog-pop 300ms cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
