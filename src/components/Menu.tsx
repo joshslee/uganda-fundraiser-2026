@@ -92,8 +92,11 @@ function ViewToggle({
     >
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-foreground transition-transform duration-300 ease-out motion-reduce:transition-none"
-        style={{ transform: `translateX(${index * 100}%)` }}
+        className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-foreground transition-transform duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform motion-reduce:transition-none"
+        style={{
+          transform: `translateX(${index * 100}%)`,
+          boxShadow: "0 0 0 1px var(--color-foreground)",
+        }}
       />
       {views.map((v, i) => {
         const active = v.id === view;
@@ -104,7 +107,7 @@ function ViewToggle({
             type="button"
             aria-selected={active}
             onClick={() => onChange(v.id)}
-            className={`relative z-10 cursor-pointer px-2 py-2 text-center transition-colors duration-300 ${i === 0 ? "" : "border-l-2 border-foreground"} ${
+            className={`relative z-10 cursor-pointer px-2 py-2 text-center transition-colors duration-[550ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${i === 0 ? "" : "border-l-2 border-foreground"} ${
               active
                 ? "text-background"
                 : "text-foreground hover:bg-foreground/10"
@@ -122,7 +125,7 @@ function GiveButton() {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const hasUrl = giveUrl.length > 0;
   const buttonClass =
-    "inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0 motion-reduce:transition-none";
+    "inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background transition-[transform,box-shadow] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-10px_var(--color-foreground)] active:translate-y-0 motion-reduce:transition-none";
 
   if (hasUrl) {
     return (
