@@ -22,27 +22,14 @@ const views: { id: View; label: string }[] = [
   { id: "drinks", label: "Drinks" },
 ];
 
-function SectionHeader({
-  title,
-  oatmilk,
-}: {
-  title: string;
-  oatmilk?: boolean;
-}) {
+function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="relative mt-10 mb-8">
-      <div className="flex items-center gap-3">
-        <span className="h-px flex-1 bg-foreground" />
-        <span className="font-mono text-[11px] sm:text-xs font-bold tracking-wide">
-          {title}
-        </span>
-        <span className="h-px flex-1 bg-foreground" />
-      </div>
-      {oatmilk && (
-        <p className="absolute right-0 top-full mt-1 font-mono text-[9px] sm:text-[10px] font-bold">
-          **Oatmilk is available upon request
-        </p>
-      )}
+    <div className="mt-10 mb-8 flex items-center gap-3">
+      <span className="h-px flex-1 bg-foreground" />
+      <span className="font-mono text-[11px] sm:text-xs font-bold tracking-wide">
+        {title}
+      </span>
+      <span className="h-px flex-1 bg-foreground" />
     </div>
   );
 }
@@ -390,10 +377,7 @@ export function Menu() {
             {showDrinks &&
               drinkSections.map((section) => (
                 <section key={section.title}>
-                  <SectionHeader
-                    title={section.title}
-                    oatmilk={section.oatmilk}
-                  />
+                  <SectionHeader title={section.title} />
                   <div className="space-y-10">
                     {section.drinks.map((drink) => (
                       <DrinkItem key={drink.name} drink={drink} />

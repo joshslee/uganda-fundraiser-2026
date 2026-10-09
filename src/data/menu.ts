@@ -9,7 +9,6 @@ export type Drink = {
 
 export type DrinkSection = {
   title: string;
-  oatmilk?: boolean;
   drinks: Drink[];
 };
 
@@ -26,7 +25,6 @@ export type PastryGroup = {
 export const drinkSections: DrinkSection[] = [
   {
     title: "Espresso Based Drinks",
-    oatmilk: true,
     drinks: [
       {
         name: "The Pearl",
@@ -49,7 +47,6 @@ export const drinkSections: DrinkSection[] = [
   },
   {
     title: "Matcha Based Drinks",
-    oatmilk: true,
     drinks: [
       {
         name: "Mabira Forest",
