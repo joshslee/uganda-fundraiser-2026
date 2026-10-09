@@ -2,6 +2,8 @@ export type Drink = {
   name: string;
   subtitle: string;
   description: string;
+  /** Where the name comes from; shown as a tooltip on the drink name. */
+  story: string;
   cloudtop?: boolean;
 };
 
@@ -31,6 +33,8 @@ export const drinkSections: DrinkSection[] = [
         subtitle: "Iced Ugandan Vanilla Latte",
         description:
           "Flash-chilled espresso with Ugandan vanilla bean syrup and your choice of lactose-free or oat milk. Finished with nutmeg and orange zest.",
+        story:
+          "Named for Uganda’s enduring nickname, “The Pearl of Africa,” and centered around vanilla grown in Uganda.",
         cloudtop: true,
       },
       {
@@ -38,6 +42,8 @@ export const drinkSections: DrinkSection[] = [
         subtitle: "Iced Peach Cold Brew Tonic",
         description:
           "Bright, fruit-forward cold brew layered with peach purée, a splash of yuzu, and crisp Fever-Tree tonic. Finished with osmanthus petals.",
+        story:
+          "Named for Lake Victoria, Africa’s largest lake, whose northern shore is Uganda’s. Bright and effervescent, like light on the water.",
       },
     ],
   },
@@ -50,6 +56,8 @@ export const drinkSections: DrinkSection[] = [
         subtitle: "Iced Matcha Latte",
         description:
           "Velvety ceremonial-grade matcha, lightly sweetened with honey or agave, with your choice of lactose-free or oat milk. Finished with buttery toffee bits.",
+        story:
+          "Named for Mabira, the rainforest between Kampala and Jinja. Deep green and velvety, like the canopy and the matcha.",
         cloudtop: true,
       },
       {
@@ -57,6 +65,8 @@ export const drinkSections: DrinkSection[] = [
         subtitle: "Iced Honey Yuzu Matcha Tonic",
         description:
           "Ceremonial-grade matcha with bright yuzu, honey, and crisp Fever-Tree tonic. Finished with candied yuzu peel.",
+        story:
+          "Named for the Nile, which begins its long journey at Jinja, Uganda. Honey and yuzu bloom over the matcha the way the river opens from the lake.",
       },
     ],
   },
@@ -68,6 +78,8 @@ export const drinkSections: DrinkSection[] = [
         subtitle: "Sparkling Blackberry Citrus Refresher",
         description:
           "Blackberry purée and fresh citrus topped with sparkling club soda. Bright, fruity, and caffeine-free.",
+        story:
+          "Named for Kampala, Uganda’s capital built across seven hills. Light, cool, and caffeine-free, like an evening breeze over the city.",
       },
     ],
   },

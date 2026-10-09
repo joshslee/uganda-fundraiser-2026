@@ -9,6 +9,7 @@ import {
   type Drink,
   type PastryGroup,
 } from "@/data/menu";
+import { DrinkName } from "./DrinkName";
 import { Flower } from "./Flower";
 import { ThemeToggle } from "./ThemeToggle";
 import { ZelleQr } from "./ZelleQr";
@@ -49,9 +50,7 @@ function SectionHeader({
 function DrinkItem({ drink }: { drink: Drink }) {
   return (
     <article className="mx-auto max-w-md text-center">
-      <h2 className="font-display text-3xl sm:text-4xl tracking-wider leading-none">
-        {drink.name}
-      </h2>
+      <DrinkName name={drink.name} story={drink.story} />
       <span
         aria-hidden="true"
         className="mx-auto mt-2.5 block h-px w-6 bg-foreground/50"
@@ -359,7 +358,7 @@ export function Menu() {
             <div className="mx-auto mt-5 max-w-sm border-2 border-foreground px-4 py-3 text-[13px] sm:text-sm leading-snug">
               <p>
                 Give what you can!{" "}
-                <strong className="font-bold">$5 suggested for drinks.</strong>
+                <strong className="font-bold">$7 suggested for drinks.</strong>
               </p>
               <p>100% of proceeds go toward the Missions Fund.</p>
             </div>
@@ -379,9 +378,6 @@ export function Menu() {
                     </div>
                   ))}
                 </div>
-                <p className="mx-auto mt-8 max-w-md text-center font-mono text-[11px] sm:text-xs">
-                  Courtesy of the Uganda Mission Team and Sarah Shin
-                </p>
               </section>
             )}
 
@@ -406,6 +402,23 @@ export function Menu() {
                 </section>
               ))}
           </div>
+          <section className="mt-20 flex flex-col items-center text-center">
+            <div className="flex w-full max-w-xs items-center gap-3">
+              <span className="h-px flex-1 bg-foreground/50" />
+              <Flower className="w-5 opacity-80" />
+              <span className="h-px flex-1 bg-foreground/50" />
+            </div>
+            <h2 className="mt-6 font-display text-3xl tracking-[0.12em] leading-none sm:text-4xl">
+              Thank You
+            </h2>
+            <p className="mt-4 max-w-sm text-sm sm:text-[15px] leading-relaxed">
+              Thank you for being here. Every cup poured and every pastry shared
+              helps carry love and hope to Uganda. We are so grateful for you.
+            </p>
+            <p className="mt-4 font-mono text-[10px] font-bold uppercase tracking-[0.18em] opacity-75 sm:text-[11px]">
+              With love, the Uganda Missions Team
+            </p>
+          </section>
         </div>
       </div>
 

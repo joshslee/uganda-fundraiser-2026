@@ -277,3 +277,23 @@ body {
     transform: none;
   }
 }
+
+/* Drink-name tooltips: rise in on hover, focus, or tap. */
+.tip {
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition:
+    opacity 350ms var(--ease-lux),
+    transform 350ms var(--ease-lux);
+}
+.tip-trigger:hover .tip,
+.tip-trigger:focus-visible .tip,
+.tip-trigger[data-open="true"] .tip {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tip {
+    transition: none;
+  }
+}
