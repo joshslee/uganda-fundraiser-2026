@@ -2,28 +2,18 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
-import { drinkSections, giveUrl, pastries, type Drink } from "@/data/menu";
+import {
+  drinkSections,
+  giveUrl,
+  pastryGroups,
+  type Drink,
+  type PastryGroup,
+} from "@/data/menu";
 import { Flower } from "./Flower";
 import { ThemeToggle } from "./ThemeToggle";
 import { ZelleQr } from "./ZelleQr";
 
 type View = "all" | "drinks" | "pastries";
-
-// Static class list so Tailwind can see every order utility we might use.
-const DESKTOP_ORDER = [
-  "sm:order-1",
-  "sm:order-2",
-  "sm:order-3",
-  "sm:order-4",
-  "sm:order-5",
-  "sm:order-6",
-  "sm:order-7",
-  "sm:order-8",
-  "sm:order-9",
-  "sm:order-10",
-  "sm:order-11",
-  "sm:order-12",
-];
 
 const views: { id: View; label: string }[] = [
   { id: "all", label: "All" },
@@ -121,6 +111,45 @@ function ViewToggle({
     </div>
   );
 }
+
+function GroupHeader({ title }: { title: string }) {
+  return (
+    <div className="mb-4 flex items-center gap-2">
+      <span className="h-px flex-1 bg-foreground/50" />
+      <span className="font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
+        {title}
+      </span>
+      <span className="h-px flex-1 bg-foreground/50" />
+    </div>
+  );
+}
+
+function PastryGroupList({ group }: { group: PastryGroup }) {
+  return (
+    <div>
+      <GroupHeader title={group.title} />
+      <ul className="space-y-3 text-center">
+        {group.items.map((p) => (
+          <li key={p.name}>
+            <h2 className="font-display text-2xl tracking-wider leading-none">
+              {p.name}
+            </h2>
+            {p.note && (
+              <p className="mt-1 font-mono text-[11px] sm:text-xs">
+                ({p.note})
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+const pastryColumns: PastryGroup[][] = [
+  pastryGroups.slice(0, 2),
+  pastryGroups.slice(2),
+];
 
 function GiveButton() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -320,23 +349,15 @@ export function Menu() {
             {showPastries && (
               <section>
                 <SectionHeader title="Pastries" />
-                <ul className="mx-auto grid max-w-md grid-cols-1 gap-x-6 gap-y-5 text-center sm:grid-cols-2">
-                  {pastries.map((p, i) => (
-                    <li
-                      key={p.name}
-                      className={DESKTOP_ORDER[(p.desktopOrder ?? i + 1) - 1]}
-                    >
-                      <h2 className="font-display text-2xl sm:text-[1.75rem] tracking-wider leading-none">
-                        {p.name}
-                      </h2>
-                      {p.note && (
-                        <p className="mt-1 font-mono text-[11px] sm:text-xs">
-                          ({p.note})
-                        </p>
-                      )}
-                    </li>
+                <div className="mx-auto grid max-w-lg grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-10">
+                  {pastryColumns.map((column, i) => (
+                    <div key={i} className="flex flex-col gap-10">
+                      {column.map((group) => (
+                        <PastryGroupList key={group.title} group={group} />
+                      ))}
+                    </div>
                   ))}
-                </ul>
+                </div>
                 <p className="mx-auto mt-8 max-w-md text-center font-mono text-[11px] sm:text-xs">
                   Courtesy of the Uganda Mission Team and Sarah Shin
                 </p>

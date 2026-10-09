@@ -14,8 +14,11 @@ export type DrinkSection = {
 export type Pastry = {
   name: string;
   note?: string;
-  /** 1-based position in the two-column (desktop) grid; defaults to list order. */
-  desktopOrder?: number;
+};
+
+export type PastryGroup = {
+  title: string;
+  items: Pastry[];
 };
 
 export const drinkSections: DrinkSection[] = [
@@ -70,17 +73,47 @@ export const drinkSections: DrinkSection[] = [
   },
 ];
 
-export const pastries: Pastry[] = [
-  { name: "Hot Honey Sourdough Bread" },
-  { name: "Sourdough Loaves", desktopOrder: 4 },
-  { name: "Pumpkin Cookies" },
-  { name: "Chocolate Chip Cookies", desktopOrder: 2 },
-  { name: "Financier" },
-  { name: "Madeleine" },
-  { name: "Banana Bread" },
-  { name: "Cornbread Cake" },
-  { name: "Blueberry Lemon Scones" },
-  { name: "Jalapeño Cheddar Scones" },
+/** Grouped for display. On desktop the first two groups form the left
+ *  column and the last two the right, so keep the counts balanced. */
+export const pastryGroups: PastryGroup[] = [
+  {
+    title: "Breads & Loaves",
+    items: [
+      { name: "Hot Honey Sourdough Bread" },
+      { name: "Chocolate Chip Sourdough Bread" },
+      { name: "Pumpkin Chocolate Chip Loaves" },
+      { name: "Sourdough Loaves" },
+      { name: "Banana Bread" },
+      { name: "Cornbread Cake" },
+    ],
+  },
+  {
+    title: "Cookies",
+    items: [
+      { name: "Chocolate Chip Cookies" },
+      { name: "Chocolate Chunk Cookies" },
+      { name: "Pumpkin Cookies" },
+    ],
+  },
+  {
+    title: "Cakes & Sweets",
+    items: [
+      { name: "Financier" },
+      { name: "Madeleine" },
+      { name: "Cube Cake" },
+      { name: "Banana Pudding" },
+      { name: "Brownies" },
+      { name: "Cream Puffs" },
+    ],
+  },
+  {
+    title: "Scones & Rolls",
+    items: [
+      { name: "Blueberry Lemon Scones" },
+      { name: "Jalapeño Cheddar Scones" },
+      { name: "Cinnamon Rolls" },
+    ],
+  },
 ];
 
 /** Zelle payment link for Living Way Community Church (donate@lwccla.org). */
