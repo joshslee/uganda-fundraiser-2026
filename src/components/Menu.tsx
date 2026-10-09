@@ -352,7 +352,7 @@ export function Menu() {
             <div className="mx-auto mt-5 max-w-sm border-2 border-foreground px-4 py-3 text-[13px] sm:text-sm leading-snug">
               <p>
                 Give what you can!{" "}
-                <strong className="font-bold">$5 suggested price.</strong>
+                <strong className="font-bold">$5 suggested for drinks.</strong>
               </p>
               <p>100% of proceeds go toward the Missions Fund.</p>
             </div>
