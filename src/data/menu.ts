@@ -70,7 +70,7 @@ export const drinkSections: DrinkSection[] = [
 
 export const pastries: Pastry[] = [
   { name: "Hot Honey Sourdough Bread" },
-  { name: "Sourdough Loaves", note: "2 loaves" },
+  { name: "Sourdough Loaves" },
   { name: "Pumpkin Cookies" },
   { name: "Chocolate Chip Cookies" },
   { name: "Financier" },
