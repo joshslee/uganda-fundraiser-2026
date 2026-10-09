@@ -84,7 +84,7 @@ export const pastryGroups: PastryGroup[] = [
       { name: "Pumpkin Chocolate Chip Loaves" },
       { name: "Sourdough Loaves" },
       { name: "Banana Bread" },
-      { name: "Cornbread Cake" },
+      { name: "Cornbread" },
     ],
   },
   {
@@ -101,6 +101,7 @@ export const pastryGroups: PastryGroup[] = [
       { name: "Financier" },
       { name: "Madeleine" },
       { name: "Cube Cake" },
+      { name: "Cornbread Cake" },
       { name: "Banana Pudding" },
       { name: "Brownies" },
       { name: "Cream Puffs" },
