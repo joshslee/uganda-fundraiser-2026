@@ -124,8 +124,8 @@ function ViewToggle({
 
 function GiveButton() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [flip, setFlip] = useState<"back" | "front" | null>(null);
-  const showQr = flip === "back";
+  const [flip, setFlip] = useState<"qr" | "front" | null>(null);
+  const showQr = flip === "qr";
   const hasUrl = giveUrl.length > 0;
   const buttonClass =
     "btn-lux inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background";
@@ -147,114 +147,111 @@ function GiveButton() {
           if (e.target === e.currentTarget) e.currentTarget.close();
         }}
         onClose={() => setFlip(null)}
-        className="give-dialog m-auto w-[calc(100%-2.5rem)] max-w-md overflow-visible border-0 bg-transparent p-0 text-foreground backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+        className="give-dialog m-auto w-[calc(100%-2.5rem)] max-w-md overflow-hidden border-2 border-foreground bg-background p-0 text-foreground backdrop:bg-black/60 backdrop:backdrop-blur-sm"
       >
-        <div className="flip-scene">
-          <div className="flip-card" data-flip={flip ?? undefined}>
-            <div className="flip-edge" aria-hidden="true" />
-            {/* front: message + verse */}
-            <div
-              className="flip-face flip-face-front flex flex-col items-center border-2 border-foreground bg-background px-6 py-8 text-center sm:px-8"
-              aria-hidden={showQr}
+        <div className="stage" data-state={flip ?? undefined}>
+          {/* front: message + verse */}
+          <div
+            className="panel panel-front flex flex-col items-center px-6 py-8 text-center sm:px-8"
+            aria-hidden={showQr}
+          >
+            <Flower className="w-12" />
+            <h2
+              id="give-title"
+              className="mt-4 font-display text-4xl tracking-wider leading-none"
             >
-              <Flower className="w-12" />
-              <h2
-                id="give-title"
-                className="mt-4 font-display text-4xl tracking-wider leading-none"
-              >
-                Thank You
-              </h2>
-              <p className="mt-3 text-sm sm:text-[15px] leading-snug">
-                {hasUrl
-                  ? "Thank you for your heart to give toward the Uganda Missions Fund. Give securely with Zelle to Living Way Community Church."
-                  : "Thank you for your heart to give toward the Uganda Missions Fund. Our giving link will be added soon, so please check back shortly."}
-              </p>
-              {hasUrl && (
-                <p className="mt-3 border border-foreground/30 px-3 py-2 font-mono text-[11px] sm:text-xs leading-snug">
-                  Please add{" "}
-                  <strong className="font-bold">
-                    &ldquo;Uganda Fundraiser 2026&rdquo;
-                  </strong>{" "}
-                  to the memo or description.
-                </p>
-              )}
-              <div className="my-6 flex w-full items-center gap-3">
-                <span className="h-px flex-1 bg-foreground/40" />
-                <Flower className="w-3 opacity-60" />
-                <span className="h-px flex-1 bg-foreground/40" />
-              </div>
-              <blockquote className="text-sm sm:text-[15px] italic leading-relaxed">
-                &ldquo;Go therefore and make disciples of all nations, baptizing
-                them in the name of the Father and of the Son and of the Holy
-                Spirit, teaching them to observe all that I have commanded you.
-                And behold, I am with you always, to the end of the age.&rdquo;
-              </blockquote>
-              <p className="mt-2 font-mono text-[11px] sm:text-xs">
-                Matthew 28:19&ndash;20 (ESV)
-              </p>
-              <div className="mt-7 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
-                {hasUrl && (
-                  <a
-                    href={giveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    tabIndex={showQr ? -1 : 0}
-                    className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center gap-2 bg-foreground px-6 font-display text-xl leading-none tracking-widest text-background"
-                  >
-                    <Flower className="w-4" />
-                    Give with Zelle
-                  </a>
-                )}
-                <button
-                  type="button"
-                  onClick={() => dialogRef.current?.close()}
-                  tabIndex={showQr ? -1 : 0}
-                  className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center border-2 border-foreground px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-foreground hover:text-background"
-                >
-                  Close
-                </button>
-              </div>
-              {hasUrl && (
-                <button
-                  type="button"
-                  onClick={() => setFlip("back")}
-                  tabIndex={showQr ? -1 : 0}
-                  className="link-lux mt-5 cursor-pointer font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100"
-                >
-                  Show QR
-                </button>
-              )}
-            </div>
-
-            {/* back: QR */}
-            <div
-              className="flip-face flip-face-back flex flex-col items-center justify-center border-2 border-foreground bg-background px-6 py-8 text-center sm:px-8"
-              aria-hidden={!showQr}
-            >
-              <h2 className="font-display text-4xl tracking-wider leading-none">
-                Scan to Give
-              </h2>
-              <p className="mt-2 font-mono text-[11px] sm:text-xs">
-                Zelle &middot; Living Way Community Church
-              </p>
-              <ZelleQr className="mt-5 w-full max-w-[260px] border-2 border-foreground" />
-              <p className="mt-4 font-mono text-[11px] sm:text-xs leading-snug">
-                Add{" "}
+              Thank You
+            </h2>
+            <p className="mt-3 text-sm sm:text-[15px] leading-snug">
+              {hasUrl
+                ? "Thank you for your heart to give toward the Uganda Missions Fund. Give securely with Zelle to Living Way Community Church."
+                : "Thank you for your heart to give toward the Uganda Missions Fund. Our giving link will be added soon, so please check back shortly."}
+            </p>
+            {hasUrl && (
+              <p className="mt-3 border border-foreground/30 px-3 py-2 font-mono text-[11px] sm:text-xs leading-snug">
+                Please add{" "}
                 <strong className="font-bold">
                   &ldquo;Uganda Fundraiser 2026&rdquo;
                 </strong>{" "}
-                to the memo.
+                to the memo or description.
               </p>
-              <div className="mt-6 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
-                <button
-                  type="button"
-                  onClick={() => setFlip("front")}
-                  tabIndex={showQr ? 0 : -1}
-                  className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center border-2 border-foreground px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-foreground hover:text-background"
+            )}
+            <div className="my-6 flex w-full items-center gap-3">
+              <span className="h-px flex-1 bg-foreground/40" />
+              <Flower className="w-3 opacity-60" />
+              <span className="h-px flex-1 bg-foreground/40" />
+            </div>
+            <blockquote className="text-sm sm:text-[15px] italic leading-relaxed">
+              &ldquo;Go therefore and make disciples of all nations, baptizing
+              them in the name of the Father and of the Son and of the Holy
+              Spirit, teaching them to observe all that I have commanded you.
+              And behold, I am with you always, to the end of the age.&rdquo;
+            </blockquote>
+            <p className="mt-2 font-mono text-[11px] sm:text-xs">
+              Matthew 28:19&ndash;20 (ESV)
+            </p>
+            <div className="mt-7 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
+              {hasUrl && (
+                <a
+                  href={giveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  tabIndex={showQr ? -1 : 0}
+                  className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center gap-2 bg-foreground px-6 font-display text-xl leading-none tracking-widest text-background"
                 >
-                  Back
-                </button>
-              </div>
+                  <Flower className="w-4" />
+                  Give with Zelle
+                </a>
+              )}
+              <button
+                type="button"
+                onClick={() => dialogRef.current?.close()}
+                tabIndex={showQr ? -1 : 0}
+                className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center border-2 border-foreground px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-foreground hover:text-background"
+              >
+                Close
+              </button>
+            </div>
+            {hasUrl && (
+              <button
+                type="button"
+                onClick={() => setFlip("qr")}
+                tabIndex={showQr ? -1 : 0}
+                className="link-lux mt-5 cursor-pointer font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100"
+              >
+                Show QR
+              </button>
+            )}
+          </div>
+
+          {/* back: QR */}
+          <div
+            className="panel panel-qr flex flex-col items-center justify-center px-6 py-8 text-center sm:px-8"
+            aria-hidden={!showQr}
+          >
+            <h2 className="font-display text-4xl tracking-wider leading-none">
+              Scan to Give
+            </h2>
+            <p className="mt-2 font-mono text-[11px] sm:text-xs">
+              Zelle &middot; Living Way Community Church
+            </p>
+            <ZelleQr className="mt-5 w-full max-w-[260px] border-2 border-foreground" />
+            <p className="mt-4 font-mono text-[11px] sm:text-xs leading-snug">
+              Add{" "}
+              <strong className="font-bold">
+                &ldquo;Uganda Fundraiser 2026&rdquo;
+              </strong>{" "}
+              to the memo.
+            </p>
+            <div className="mt-6 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
+              <button
+                type="button"
+                onClick={() => setFlip("front")}
+                tabIndex={showQr ? 0 : -1}
+                className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center border-2 border-foreground px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-foreground hover:text-background"
+              >
+                Back
+              </button>
             </div>
           </div>
         </div>

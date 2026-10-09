@@ -179,94 +179,96 @@ body {
   background-size: 100% 1px;
 }
 
-/* Give modal: a card with real thickness that turns over.
-   Faces sit 6px either side of a solid edge, and the card lifts slightly
-   mid-turn, so it is always visible, even edge-on. */
-.flip-scene {
-  perspective: 1400px;
-}
-.flip-card {
-  position: relative;
+/* Give modal: panels hand off vertically inside the card.
+   Show QR: the message lifts out the top while the QR is pulled up from
+   below. Back: the QR drops away and the message settles down from above. */
+.stage {
   display: grid;
-  transform-style: preserve-3d;
+  overflow: hidden;
 }
-.flip-card[data-flip="back"] {
-  animation: flip-to-back 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-.flip-card[data-flip="front"] {
-  animation: flip-to-front 900ms cubic-bezier(0.65, 0, 0.35, 1) both;
-}
-@keyframes flip-to-back {
-  0% {
-    transform: rotateY(0deg) scale(1);
-  }
-  50% {
-    transform: rotateY(90deg) scale(1.06);
-  }
-  100% {
-    transform: rotateY(180deg) scale(1);
-  }
-}
-@keyframes flip-to-front {
-  0% {
-    transform: rotateY(180deg) scale(1);
-  }
-  50% {
-    transform: rotateY(90deg) scale(1.06);
-  }
-  100% {
-    transform: rotateY(0deg) scale(1);
-  }
-}
-.flip-face {
+.panel {
   grid-area: 1 / 1;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
-  /* Faces swap exactly when the card is edge-on. */
-  transition: opacity 0ms linear 450ms;
 }
-.flip-face-front {
-  transform: translateZ(6px);
-}
-.flip-face-back {
-  transform: rotateY(180deg) translateZ(6px);
+.panel-qr {
   opacity: 0;
   pointer-events: none;
 }
-.flip-card[data-flip="back"] .flip-face-back {
-  opacity: 1;
+.stage[data-state="qr"] .panel-front {
+  animation: panel-leave-up 600ms var(--ease-lux) both;
+  pointer-events: none;
+}
+.stage[data-state="qr"] .panel-qr {
+  animation: panel-enter-up 750ms var(--ease-lux) 90ms both;
   pointer-events: auto;
 }
-.flip-card[data-flip="back"] .flip-face-front {
-  opacity: 0;
+.stage[data-state="front"] .panel-qr {
+  animation: panel-leave-down 600ms var(--ease-lux) both;
   pointer-events: none;
 }
-/* The card's edge: a slab perpendicular to the faces, visible mid-turn. */
-.flip-edge {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 12px;
-  margin-left: -6px;
-  background: var(--color-foreground);
-  transform: rotateY(90deg);
+.stage[data-state="front"] .panel-front {
+  animation: panel-enter-down 750ms var(--ease-lux) 90ms both;
+}
+@keyframes panel-leave-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-56px);
+    filter: blur(4px);
+  }
+}
+@keyframes panel-enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(88px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes panel-leave-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(88px);
+    filter: blur(4px);
+  }
+}
+@keyframes panel-enter-down {
+  from {
+    opacity: 0;
+    transform: translateY(-56px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .btn-lux,
   .tab-lux,
   .link-lux,
-  .flip-card[data-flip="back"],
-  .flip-card[data-flip="front"] {
-    animation: none;
+  .stage .panel {
+    animation: none !important;
   }
-  .flip-card[data-flip="back"] {
-    transform: rotateY(180deg);
+  .stage[data-state="qr"] .panel-front {
+    opacity: 0;
   }
-  .flip-face {
-    transition: none;
+  .stage[data-state="qr"] .panel-qr {
+    opacity: 1;
   }
   .btn-lux:hover,
   .btn-lux:active {
