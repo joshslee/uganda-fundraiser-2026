@@ -99,18 +99,6 @@ export function Menu() {
           <ViewToggle view={view} onChange={setView} />
         </header>
 
-        {showDrinks &&
-          drinkSections.map((section) => (
-            <section key={section.title}>
-              <SectionHeader title={section.title} oatmilk={section.oatmilk} />
-              <div className="space-y-10">
-                {section.drinks.map((drink) => (
-                  <DrinkItem key={drink.name} drink={drink} />
-                ))}
-              </div>
-            </section>
-          ))}
-
         {showPastries && (
           <section>
             <SectionHeader title="Pastries" />
@@ -126,8 +114,23 @@ export function Menu() {
                 </li>
               ))}
             </ul>
+            <p className="mx-auto mt-8 max-w-md text-center font-mono text-[11px] sm:text-xs">
+              Courtesy of the Uganda Mission Team and Sarah Shin
+            </p>
           </section>
         )}
+
+        {showDrinks &&
+          drinkSections.map((section) => (
+            <section key={section.title}>
+              <SectionHeader title={section.title} oatmilk={section.oatmilk} />
+              <div className="space-y-10">
+                {section.drinks.map((drink) => (
+                  <DrinkItem key={drink.name} drink={drink} />
+                ))}
+              </div>
+            </section>
+          ))}
 
         <Flower className="pointer-events-none absolute bottom-4 right-4 w-24 rotate-12 sm:right-0 sm:w-28" />
       </div>
