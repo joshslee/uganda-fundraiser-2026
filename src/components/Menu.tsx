@@ -124,7 +124,8 @@ function ViewToggle({
 
 function GiveButton() {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [showQr, setShowQr] = useState(false);
+  const [flip, setFlip] = useState<"back" | "front" | null>(null);
+  const showQr = flip === "back";
   const hasUrl = giveUrl.length > 0;
   const buttonClass =
     "btn-lux inline-flex h-10 cursor-pointer items-center gap-1.5 bg-foreground px-4 font-display text-lg leading-none tracking-widest text-background";
@@ -145,11 +146,12 @@ function GiveButton() {
         onClick={(e) => {
           if (e.target === e.currentTarget) e.currentTarget.close();
         }}
-        onClose={() => setShowQr(false)}
+        onClose={() => setFlip(null)}
         className="give-dialog m-auto w-[calc(100%-2.5rem)] max-w-md overflow-visible border-0 bg-transparent p-0 text-foreground backdrop:bg-black/60 backdrop:backdrop-blur-sm"
       >
         <div className="flip-scene">
-          <div className="flip-card" data-flipped={showQr}>
+          <div className="flip-card" data-flip={flip ?? undefined}>
+            <div className="flip-edge" aria-hidden="true" />
             {/* front: message + verse */}
             <div
               className="flip-face flip-face-front flex flex-col items-center border-2 border-foreground bg-background px-6 py-8 text-center sm:px-8"
@@ -215,7 +217,7 @@ function GiveButton() {
               {hasUrl && (
                 <button
                   type="button"
-                  onClick={() => setShowQr(true)}
+                  onClick={() => setFlip("back")}
                   tabIndex={showQr ? -1 : 0}
                   className="link-lux mt-5 cursor-pointer font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider opacity-80 hover:opacity-100"
                 >
@@ -246,7 +248,7 @@ function GiveButton() {
               <div className="mt-6 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:justify-center">
                 <button
                   type="button"
-                  onClick={() => setShowQr(false)}
+                  onClick={() => setFlip("front")}
                   tabIndex={showQr ? 0 : -1}
                   className="btn-lux inline-flex h-11 cursor-pointer items-center justify-center border-2 border-foreground px-6 font-mono text-[11px] sm:text-xs font-bold uppercase tracking-wider hover:bg-foreground hover:text-background"
                 >
