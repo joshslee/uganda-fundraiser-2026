@@ -116,6 +116,33 @@ function GiveButton() {
   );
 }
 
+function LivingWayMark() {
+  return (
+    <a
+      href="https://livingway.la/"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="LivingWay"
+      className="absolute left-5 top-5 z-20 block text-foreground opacity-90 transition-opacity hover:opacity-100 sm:left-6 sm:top-6"
+    >
+      <span
+        aria-hidden="true"
+        className="block h-10 w-[101px] bg-current"
+        style={{
+          maskImage: "url(/livingway.png)",
+          WebkitMaskImage: "url(/livingway.png)",
+          maskSize: "contain",
+          WebkitMaskSize: "contain",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+          maskPosition: "left center",
+          WebkitMaskPosition: "left center",
+        }}
+      />
+    </a>
+  );
+}
+
 export function Menu() {
   const [view, setView] = useState<View>("all");
   const showDrinks = view !== "pastries";
@@ -123,6 +150,7 @@ export function Menu() {
 
   return (
     <main className="relative flex flex-1 flex-col bg-background text-foreground">
+      <LivingWayMark />
       <div className="absolute right-5 top-5 z-20 flex items-center gap-2 sm:right-6 sm:top-6">
         <ThemeToggle />
         <GiveButton />
