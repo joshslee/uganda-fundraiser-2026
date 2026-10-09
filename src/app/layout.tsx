@@ -20,9 +20,9 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Drink Menu | Uganda Fundraiser 2026",
+  title: "Menu | Uganda Fundraiser 2026",
   description:
-    "Common Grounds drink menu. Give what you can, $5 suggested price. 100% of proceeds go toward the Missions Fund.",
+    "Common Grounds drink and pastry menu. Give what you can, $5 suggested price. 100% of proceeds go toward the Missions Fund.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
