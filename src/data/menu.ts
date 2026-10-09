@@ -80,3 +80,6 @@ export const pastries: Pastry[] = [
   { name: "Blueberry Lemon Scones" },
   { name: "Jalapeño Cheddar Scones" },
 ];
+
+/** Destination for the Give button. Leave empty until a giving link exists. */
+export const giveUrl = "";
