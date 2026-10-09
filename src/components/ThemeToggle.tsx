@@ -1,17 +1,23 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
+
+function subscribe(onChange: () => void) {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
+
+const getSnapshot = () => document.documentElement.dataset.theme === "dark";
+const getServerSnapshot = () => false;
 
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const dark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  useEffect(() => {
-    setDark(document.documentElement.dataset.theme === "dark");
-  }, []);
-
-  function toggle() {
-    const next = !dark;
-    setDark(next);
+  function applyTheme(next: boolean) {
     if (next) {
       document.documentElement.dataset.theme = "dark";
     } else {
@@ -22,6 +28,36 @@ export function ThemeToggle() {
     } catch {
       /* storage unavailable */
     }
+  }
+
+  function toggle(e: React.MouseEvent<HTMLButtonElement>) {
+    const next = !dark;
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!document.startViewTransition || reduceMotion) {
+      applyTheme(next);
+      return;
+    }
+
+    // Circular reveal that grows out from the bulb. Percentages keep the
+    // origin correct regardless of device pixel ratio; 150% of the
+    // reference box always covers the full viewport from any corner.
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((rect.left + rect.width / 2) / innerWidth) * 100;
+    const y = ((rect.top + rect.height / 2) / innerHeight) * 100;
+
+    const transition = document.startViewTransition(() => applyTheme(next));
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [`circle(0% at ${x}% ${y}%)`, `circle(150% at ${x}% ${y}%)`],
+        },
+        {
+          duration: 650,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
   }
 
   return (

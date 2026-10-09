@@ -14,6 +14,8 @@ export type DrinkSection = {
 export type Pastry = {
   name: string;
   note?: string;
+  /** 1-based position in the two-column (desktop) grid; defaults to list order. */
+  desktopOrder?: number;
 };
 
 export const drinkSections: DrinkSection[] = [
@@ -70,9 +72,9 @@ export const drinkSections: DrinkSection[] = [
 
 export const pastries: Pastry[] = [
   { name: "Hot Honey Sourdough Bread" },
-  { name: "Sourdough Loaves" },
+  { name: "Sourdough Loaves", desktopOrder: 4 },
   { name: "Pumpkin Cookies" },
-  { name: "Chocolate Chip Cookies" },
+  { name: "Chocolate Chip Cookies", desktopOrder: 2 },
   { name: "Financier" },
   { name: "Madeleine" },
   { name: "Banana Bread" },

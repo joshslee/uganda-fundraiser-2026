@@ -8,6 +8,22 @@ import { ThemeToggle } from "./ThemeToggle";
 
 type View = "all" | "drinks" | "pastries";
 
+// Static class list so Tailwind can see every order utility we might use.
+const DESKTOP_ORDER = [
+  "sm:order-1",
+  "sm:order-2",
+  "sm:order-3",
+  "sm:order-4",
+  "sm:order-5",
+  "sm:order-6",
+  "sm:order-7",
+  "sm:order-8",
+  "sm:order-9",
+  "sm:order-10",
+  "sm:order-11",
+  "sm:order-12",
+];
+
 const views: { id: View; label: string }[] = [
   { id: "all", label: "All" },
   { id: "pastries", label: "Pastries" },
@@ -175,8 +191,8 @@ export function Menu() {
             <section>
               <SectionHeader title="Pastries" />
               <ul className="mx-auto grid max-w-md grid-cols-1 gap-x-6 gap-y-5 text-center sm:grid-cols-2">
-                {pastries.map((p) => (
-                  <li key={p.name}>
+                {pastries.map((p, i) => (
+                  <li key={p.name} className={DESKTOP_ORDER[(p.desktopOrder ?? i + 1) - 1]}>
                     <h2 className="font-display text-2xl sm:text-[1.75rem] tracking-wider leading-none">
                       {p.name}
                     </h2>
