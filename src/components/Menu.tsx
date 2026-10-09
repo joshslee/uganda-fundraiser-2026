@@ -112,6 +112,20 @@ function ViewToggle({
   );
 }
 
+function MajorHeader({ title }: { title: string }) {
+  return (
+    <div className="mt-14 mb-2 flex items-center gap-4 sm:gap-5">
+      <span className="h-px flex-1 bg-foreground" />
+      <h2 className="flex items-center gap-3 font-display text-3xl tracking-[0.12em] leading-none sm:text-4xl">
+        <Flower className="w-5 opacity-80 sm:w-6" />
+        {title}
+        <Flower className="w-5 opacity-80 sm:w-6" />
+      </h2>
+      <span className="h-px flex-1 bg-foreground" />
+    </div>
+  );
+}
+
 function GroupHeader({ title }: { title: string }) {
   return (
     <div className="mb-4 flex items-center gap-2">
@@ -348,8 +362,8 @@ export function Menu() {
           <div key={view} className="menu-fade-in min-h-[50vh]">
             {showPastries && (
               <section>
-                <SectionHeader title="Pastries" />
-                <div className="mx-auto grid max-w-lg grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-10">
+                <MajorHeader title="Pastries" />
+                <div className="mx-auto mt-8 grid max-w-lg grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-x-10">
                   {pastryColumns.map((column, i) => (
                     <div key={i} className="flex flex-col gap-10">
                       {column.map((group) => (
@@ -361,6 +375,12 @@ export function Menu() {
                 <p className="mx-auto mt-8 max-w-md text-center font-mono text-[11px] sm:text-xs">
                   Courtesy of the Uganda Mission Team and Sarah Shin
                 </p>
+              </section>
+            )}
+
+            {showDrinks && (
+              <section>
+                <MajorHeader title="Drinks" />
               </section>
             )}
 
