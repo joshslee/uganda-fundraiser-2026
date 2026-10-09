@@ -412,8 +412,9 @@ export function Menu() {
               Thank You
             </h2>
             <p className="mt-4 max-w-sm text-sm sm:text-[15px] leading-relaxed">
-              Thank you for being here. Every cup poured and every pastry shared
-              helps carry love and hope to Uganda. We are so grateful for you.
+              Thank you for being here. Every dollar donated, every cup poured,
+              and every pastry shared helps carry love and hope to Uganda. We
+              are so grateful for you.
             </p>
             <p className="mt-4 font-mono text-[10px] font-bold uppercase tracking-[0.18em] opacity-75 sm:text-[11px]">
               With love, the Uganda Missions Team
